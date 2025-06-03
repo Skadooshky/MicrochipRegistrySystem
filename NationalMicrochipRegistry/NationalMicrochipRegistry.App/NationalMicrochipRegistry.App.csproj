@@ -8,4 +8,9 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\NationalMicrochipRegistry.Business\NationalMicrochipRegistry.Business.csproj" />
+    <ProjectReference Include="..\NationalMicrochipRegistry.Data\NationalMicrochipRegistry.Data.csproj" />
+  </ItemGroup>
+
 </Project>

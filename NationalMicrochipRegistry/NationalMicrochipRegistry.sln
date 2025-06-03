@@ -1,9 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36109.1 d17.14
+VisualStudioVersion = 17.14.36109.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NationalMicrochipRegistry", "NationalMicrochipRegistry\NationalMicrochipRegistry.csproj", "{C5E60536-4F8E-4B32-9EE3-C335E14A5820}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NationalMicrochipRegistry.App", "NationalMicrochipRegistry.App\NationalMicrochipRegistry.App.csproj", "{595E1CF0-01D7-CE15-822B-85468CDB9A96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NationalMicrochipRegistry.Data", "NationalMicrochipRegistry.Data\NationalMicrochipRegistry.Data.csproj", "{07299604-A596-458F-BD1F-065205286643}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NationalMicrochipRegistry.Business", "NationalMicrochipRegistry.Business\NationalMicrochipRegistry.Business.csproj", "{332A7B4A-1BD2-448B-B153-D5D8E07FBE34}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NationalMicrochipRegistry.Tests", "NationalMicrochipRegistry.Tests\NationalMicrochipRegistry.Tests.csproj", "{8E781822-165B-467F-8B77-8339AC4EDDA8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +17,22 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C5E60536-4F8E-4B32-9EE3-C335E14A5820}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C5E60536-4F8E-4B32-9EE3-C335E14A5820}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C5E60536-4F8E-4B32-9EE3-C335E14A5820}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C5E60536-4F8E-4B32-9EE3-C335E14A5820}.Release|Any CPU.Build.0 = Release|Any CPU
+		{595E1CF0-01D7-CE15-822B-85468CDB9A96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{595E1CF0-01D7-CE15-822B-85468CDB9A96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{595E1CF0-01D7-CE15-822B-85468CDB9A96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{595E1CF0-01D7-CE15-822B-85468CDB9A96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07299604-A596-458F-BD1F-065205286643}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07299604-A596-458F-BD1F-065205286643}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07299604-A596-458F-BD1F-065205286643}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07299604-A596-458F-BD1F-065205286643}.Release|Any CPU.Build.0 = Release|Any CPU
+		{332A7B4A-1BD2-448B-B153-D5D8E07FBE34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{332A7B4A-1BD2-448B-B153-D5D8E07FBE34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{332A7B4A-1BD2-448B-B153-D5D8E07FBE34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{332A7B4A-1BD2-448B-B153-D5D8E07FBE34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E781822-165B-467F-8B77-8339AC4EDDA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E781822-165B-467F-8B77-8339AC4EDDA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E781822-165B-467F-8B77-8339AC4EDDA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E781822-165B-467F-8B77-8339AC4EDDA8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
