@@ -1,0 +1,153 @@
+﻿<UserControl x:Class="NationalMicrochipRegistry.App.Views.ClinicView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:NationalMicrochipRegistry.App.ViewModels"
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DesignWidth="600">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Input form -->
+            <RowDefinition Height="*"/>
+            <!-- DataGrid -->
+            <RowDefinition Height="Auto"/>
+            <!-- Buttons -->
+        </Grid.RowDefinitions>
+
+        <!-- =======================
+         1) Input Form (Add/Edit)
+         ======================= -->
+        <GroupBox Header="Add / Edit Clinic"
+              Grid.Row="0"
+              Padding="10"
+              Margin="0,0,0,10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Name -->
+                <TextBlock Text="Name:" Grid.Row="0" Grid.Column="0"
+                   VerticalAlignment="Center" Margin="0,0,5,5"/>
+                <TextBox Text="{Binding CurrentClinic.Name, UpdateSourceTrigger=PropertyChanged}"
+                 Grid.Row="0" Grid.Column="1"
+                 Margin="0,0,5,5"/>
+
+                <!-- Address -->
+                <TextBlock Text="Address:" Grid.Row="0" Grid.Column="2"
+                   VerticalAlignment="Center" Margin="15,0,5,5"/>
+                <TextBox Text="{Binding CurrentClinic.Address, UpdateSourceTrigger=PropertyChanged}"
+                 Grid.Row="0" Grid.Column="3"
+                 Margin="0,0,5,5"/>
+
+                <!-- Phone Number -->
+                <TextBlock Text="Phone Number:" Grid.Row="1" Grid.Column="0"
+                   VerticalAlignment="Center" Margin="0,0,5,0"/>
+                <TextBox Text="{Binding CurrentClinic.PhoneNumber, UpdateSourceTrigger=PropertyChanged}"
+                 Grid.Row="1" Grid.Column="1"
+                 Margin="0,0,5,0"/>
+
+                <!-- (Columns 2 & 3 on row 1 remain empty) -->
+            </Grid>
+        </GroupBox>
+
+        <!-- =========================
+         2) Clinics List (DataGrid)
+         ========================= -->
+        <DataGrid Grid.Row="1"
+              ItemsSource="{Binding Clinics}"
+              SelectedItem="{Binding SelectedClinic}"
+              AutoGenerateColumns="False"
+              IsReadOnly="True"
+              CanUserAddRows="False"
+              Margin="0,0,0,10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="200"/>
+                <DataGridTextColumn Header="Phone" Binding="{Binding PhoneNumber}" Width="150"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- ================================
+         3) Buttons: Add / Edit / Delete
+         (only visible to admins)
+         ================================ -->
+        <StackPanel Grid.Row="2"
+                Orientation="Horizontal"
+                HorizontalAlignment="Center"
+                Margin="0,10">
+
+            <!-- Add Clinic (Admin only) -->
+            <Button Content="Add Clinic"
+              Command="{Binding AddCommand}"
+              Width="100"
+              Height="30">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Visibility" Value="Visible"/>
+                        <Style.Triggers>
+                            <!-- Hide if plain User -->
+                            <DataTrigger Binding="{Binding IsOwner}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <!-- Edit Clinic (Admin only) -->
+            <Button Content="Edit Clinic"
+              Command="{Binding EditCommand}"
+              Width="100"
+              Height="30">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Visibility" Value="Visible"/>
+                        <Style.Triggers>
+                            <!-- Hide if plain User -->
+                            <DataTrigger Binding="{Binding IsOwner}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <!-- Delete Clinic (Admin only) -->
+            <Button Content="Delete Clinic"
+              Command="{Binding DeleteCommand}"
+              Width="100"
+              Height="30">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Visibility" Value="Visible"/>
+                        <Style.Triggers>
+                            <!-- Hide if plain User -->
+                            <DataTrigger Binding="{Binding IsOwner}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <!-- Refresh (visible to all roles) -->
+            <Button Content="Refresh"
+              Command="{Binding RefreshCommand}"
+              Width="100"
+              Height="30"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -1,4 +1,5 @@
-﻿using NationalMicrochipRegistry.Data.Models;
+﻿using System.Collections.Generic;
+using NationalMicrochipRegistry.Data.Models;
 
 namespace NationalMicrochipRegistry.Business.Repositories
 {
@@ -25,6 +26,13 @@ namespace NationalMicrochipRegistry.Business.Repositories
         /// <param name="username">The username to search for.</param>
         /// <returns>The <see cref="User"/> if found; otherwise, <c>null</c>.</returns>
         User? GetByUsername(string username);
+
+        /// <summary>
+        /// Retrieves a user based on their ID.
+        /// </summary>
+        /// <param name="userId">The ID to search for.</param>
+        /// <returns>The <see cref="User"/> if found; otherwise, <c>null</c>.</returns>
+        User? GetById(int userId);
 
         /// <summary>
         /// Retrieves all users from the data store.

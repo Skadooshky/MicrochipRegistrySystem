@@ -1,6 +1,7 @@
-﻿using NationalMicrochipRegistry.Data.Models;
+﻿using System.Collections.Generic;
 using NationalMicrochipRegistry.Business.Interfaces;
 using NationalMicrochipRegistry.Business.Repositories;
+using NationalMicrochipRegistry.Data.Models;
 
 namespace NationalMicrochipRegistry.Business.Services
 {
@@ -20,35 +21,19 @@ namespace NationalMicrochipRegistry.Business.Services
             _clinicRepo = clinicRepo;
         }
 
-        /// <summary>
-        /// Adds a new clinic to the repository.
-        /// </summary>
-        /// <param name="clinic">The clinic to add.</param>
+        /// <inheritdoc/>
         public void AddClinic(Clinic clinic) => _clinicRepo.Add(clinic);
 
-        /// <summary>
-        /// Updates the information for an existing clinic.
-        /// </summary>
-        /// <param name="clinic">The updated clinic object.</param>
+        /// <inheritdoc/>
         public void EditClinic(Clinic clinic) => _clinicRepo.Update(clinic);
 
-        /// <summary>
-        /// Deletes a clinic from the repository by its ID.
-        /// </summary>
-        /// <param name="clinicId">The ID of the clinic to delete.</param>
+        /// <inheritdoc/>
         public void DeleteClinic(int clinicId) => _clinicRepo.Delete(clinicId);
 
-        /// <summary>
-        /// Retrieves all clinics from the repository.
-        /// </summary>
-        /// <returns>A list of all <see cref="Clinic"/> entries.</returns>
+        /// <inheritdoc/>
         public List<Clinic> GetAllClinics() => _clinicRepo.GetAll();
 
-        /// <summary>
-        /// Retrieves a clinic by its ID.
-        /// </summary>
-        /// <param name="clinicId">The ID of the clinic to retrieve.</param>
-        /// <returns>The <see cref="Clinic"/> if found; otherwise, <c>null</c>.</returns>
+        /// <inheritdoc/>
         public Clinic? GetClinicById(int clinicId) => _clinicRepo.GetById(clinicId);
     }
 }

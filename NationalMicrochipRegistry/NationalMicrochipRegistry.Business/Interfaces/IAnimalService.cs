@@ -1,4 +1,5 @@
 ﻿using NationalMicrochipRegistry.Data.Models;
+using System.Collections.Generic;
 
 namespace NationalMicrochipRegistry.Business.Interfaces
 {
@@ -8,22 +9,35 @@ namespace NationalMicrochipRegistry.Business.Interfaces
     public interface IAnimalService
     {
         /// <summary>
+        /// Adds a new animal to the data store.
+        /// </summary>
+        /// <param name="animal">The <see cref="Animal"/> object to add.</param>
+        void AddAnimal(Animal animal);
+
+        /// <summary>
+        /// Retrieves all animals from the data store.
+        /// </summary>
+        /// <returns>A list of <see cref="Animal"/> objects.</returns>
+        List<Animal> GetAllAnimals();
+
+        /// <summary>
         /// Retrieves an animal associated with the specified microchip number.
         /// </summary>
-        /// <param name="chipNumber">The unique chip number linked to the animal.</param>
-        /// <returns>
-        /// The <see cref="Animal"/> object if found; otherwise, <c>null</c>.
-        /// </returns>
+        /// <param name="chipNumber">The chip number to look up.</param>
+        /// <returns>The <see cref="Animal"/> assigned to the chip, or <c>null</c> if none is assigned.</returns>
         Animal? GetAnimalByChipNumber(string chipNumber);
 
         /// <summary>
-        /// Assigns a new animal to a microchip identified by its chip number.
+        /// Assigns a new animal to a microchip by chip number.
         /// </summary>
-        /// <param name="chipNumber">The unique identifier of the microchip.</param>
-        /// <param name="animal">The animal to be assigned to the chip.</param>
-        /// <exception cref="InvalidOperationException">
-        /// Thrown if the chip does not exist or is already assigned.
-        /// </exception>
+        /// <param name="chipNumber">The chip number to assign the animal to.</param>
+        /// <param name="animal">The <see cref="Animal"/> to assign.</param>
         void AssignAnimalToChip(string chipNumber, Animal animal);
+
+        /// <summary>
+        /// Updates an existing animal’s details in the data store.
+        /// </summary>
+        /// <param name="animal">The <see cref="Animal"/> object with updated data.</param>
+        void UpdateAnimal(Animal animal);
     }
 }

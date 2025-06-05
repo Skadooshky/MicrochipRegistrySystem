@@ -1,4 +1,5 @@
 ﻿using NationalMicrochipRegistry.Data.Models;
+using System.Collections.Generic;
 
 namespace NationalMicrochipRegistry.Business.Repositories
 {
@@ -31,5 +32,18 @@ namespace NationalMicrochipRegistry.Business.Repositories
         /// <param name="chipNumber">The chip number used to find the microchip.</param>
         /// <returns>The <see cref="Microchip"/> if found; otherwise, <c>null</c>.</returns>
         Microchip? GetByChipNumber(string chipNumber);
+
+        /// <summary>
+        /// Retrieves all microchips in the data store.
+        /// </summary>
+        /// <returns>A list of all <see cref="Microchip"/> records.</returns>
+        List<Microchip> GetAll();
+
+        /// <summary>
+        /// Retrieves a microchip by the associated animal’s ID.
+        /// </summary>
+        /// <param name="animalId">The ID of the animal whose microchip is requested.</param>
+        /// <returns>The <see cref="Microchip"/> if found; otherwise, <c>null</c>.</returns>
+        Microchip? GetByAnimalId(int animalId);
     }
 }
