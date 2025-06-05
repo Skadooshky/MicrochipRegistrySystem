@@ -1,0 +1,182 @@
+﻿<UserControl x:Class="NationalMicrochipRegistry.App.Views.AnimalView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:NationalMicrochipRegistry.App.ViewModels"
+             xmlns:data="clr-namespace:NationalMicrochipRegistry.Data.Enums;assembly=NationalMicrochipRegistry.Data"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d"
+             d:DesignHeight="550"
+             d:DesignWidth="900">
+
+    <UserControl.Resources>
+        <!-- ObjectDataProvider for AnimalType enum -->
+        <ObjectDataProvider x:Key="AnimalTypeValues"
+                        MethodName="GetValues"
+                        ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <!-- Must match CLR namespace + assembly exactly -->
+                <x:Type TypeName="data:AnimalType"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+        <!-- ObjectDataProvider for AnimalSex enum -->
+        <ObjectDataProvider x:Key="AnimalSexValues"
+                        MethodName="GetValues"
+                        ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="data:AnimalSex"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </UserControl.Resources>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- =====================
+         1) Input Section
+         ===================== -->
+        <GroupBox Header="Animal Details"
+              Grid.Row="0"
+              Grid.ColumnSpan="2"
+              Padding="10"
+              Margin="0,0,0,10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Name -->
+                <TextBlock Text="Name:" Grid.Row="0" Grid.Column="0"
+                   VerticalAlignment="Center" Margin="0,0,5,5"/>
+                <TextBox Text="{Binding CurrentAnimal.Name, UpdateSourceTrigger=PropertyChanged}"
+                 Grid.Row="0" Grid.Column="1" Margin="0,0,5,5"/>
+
+                <!-- Type -->
+                <TextBlock Text="Type:" Grid.Row="0" Grid.Column="2"
+                   VerticalAlignment="Center" Margin="15,0,5,5"/>
+                <ComboBox ItemsSource="{Binding Source={StaticResource AnimalTypeValues}}"
+                  SelectedItem="{Binding CurrentAnimal.Type, Mode=TwoWay}"
+                  Grid.Row="0" Grid.Column="3" Margin="0,0,5,5"/>
+
+                <!-- Breed -->
+                <TextBlock Text="Breed:" Grid.Row="0" Grid.Column="4"
+                   VerticalAlignment="Center" Margin="15,0,5,5"/>
+                <TextBox Text="{Binding CurrentAnimal.Breed, UpdateSourceTrigger=PropertyChanged}"
+                 Grid.Row="0" Grid.Column="5" Margin="0,0,5,5"/>
+
+                <!-- Sex -->
+                <TextBlock Text="Sex:" Grid.Row="1" Grid.Column="0"
+                   VerticalAlignment="Center" Margin="0,0,5,5"/>
+                <ComboBox ItemsSource="{Binding Source={StaticResource AnimalSexValues}}"
+                  SelectedItem="{Binding CurrentAnimal.Sex, Mode=TwoWay}"
+                  Grid.Row="1" Grid.Column="1" Margin="0,0,5,5"/>
+
+                <!-- Age -->
+                <TextBlock Text="Age:" Grid.Row="1" Grid.Column="2"
+                   VerticalAlignment="Center" Margin="15,0,5,5"/>
+                <TextBox Text="{Binding CurrentAnimal.Age, UpdateSourceTrigger=PropertyChanged}"
+                 Grid.Row="1" Grid.Column="3" Margin="0,0,5,5"/>
+
+                <!-- Owner Name -->
+                <TextBlock Text="Owner Name:" Grid.Row="1" Grid.Column="4"
+                   VerticalAlignment="Center" Margin="15,0,5,5"/>
+                <TextBox Text="{Binding CurrentAnimal.OwnerName, UpdateSourceTrigger=PropertyChanged}"
+                 Grid.Row="1" Grid.Column="5" Margin="0,0,5,5"/>
+
+                <!-- Owner Contact -->
+                <TextBlock Text="Owner Contact:" Grid.Row="2" Grid.Column="0"
+                   VerticalAlignment="Center" Margin="0,0,5,5"/>
+                <TextBox Text="{Binding CurrentAnimal.OwnerContact, UpdateSourceTrigger=PropertyChanged}"
+                 Grid.Row="2" Grid.Column="1" Margin="0,0,5,5"/>
+
+                <!-- Clinic (dropdown) -->
+                <TextBlock Text="Clinic:" Grid.Row="2" Grid.Column="2"
+                   VerticalAlignment="Center" Margin="15,0,5,5"/>
+                <ComboBox ItemsSource="{Binding Clinics}"
+                  SelectedItem="{Binding CurrentClinic}"
+                  DisplayMemberPath="Name"
+                  Grid.Row="2" Grid.Column="3" Margin="0,0,5,5"/>
+
+                <!-- Chip Number -->
+                <TextBlock Text="Chip Number:" Grid.Row="2" Grid.Column="4"
+                   VerticalAlignment="Center" Margin="15,0,5,5"/>
+                <TextBox Text="{Binding CurrentChipNumber, UpdateSourceTrigger=PropertyChanged}"
+                 Grid.Row="2" Grid.Column="5" Margin="0,0,5,5"/>
+
+                <!-- Buttons: Add / Update / Delete -->
+                <StackPanel Grid.Row="3" Grid.ColumnSpan="6"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Margin="0,10,0,0">
+                    <Button Content="Add"
+                  Command="{Binding AddCommand}"
+                  Width="80" Height="30"/>
+                    <Button Content="Update"
+                  Command="{Binding UpdateCommand}"
+                  Width="80" Height="30"/>
+                    <Button Content="Delete"
+                  Command="{Binding DeleteCommand}"
+                  Width="80" Height="30"/>
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+
+        <!-- ============================
+         2) Animal List (DataGrid)
+         ============================ -->
+        <DataGrid Grid.Row="1" Grid.ColumnSpan="2"
+              ItemsSource="{Binding Animals}"
+              SelectedItem="{Binding SelectedAnimal}"
+              AutoGenerateColumns="False"
+              IsReadOnly="True"
+              CanUserAddRows="False"
+              Margin="0,0,0,10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="100"/>
+                <DataGridTextColumn Header="Breed" Binding="{Binding Breed}" Width="100"/>
+                <DataGridTextColumn Header="Sex" Binding="{Binding Sex}" Width="100"/>
+                <DataGridTextColumn Header="Age" Binding="{Binding Age}" Width="75"/>
+                <DataGridTextColumn Header="Owner Name" Binding="{Binding OwnerName}" Width="150"/>
+                <DataGridTextColumn Header="Owner Contact" Binding="{Binding OwnerContact}" Width="150"/>
+                <DataGridTextColumn Header="Chip Number"
+                             Binding="{Binding Microchip.ChipNumber}"
+                             Width="125"/>
+                <DataGridTextColumn Header="Clinic"
+                             Binding="{Binding Microchip.Clinic.Name}"
+                             Width="150"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- ============================
+         3) Refresh Button
+         ============================ -->
+        <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+            Content="Refresh"
+            Command="{Binding RefreshCommand}"
+            HorizontalAlignment="Center"
+            Padding="10,5"/>
+    </Grid>
+</UserControl>

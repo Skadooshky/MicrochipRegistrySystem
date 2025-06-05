@@ -1,4 +1,6 @@
-﻿using NationalMicrochipRegistry.Data.Models;
+﻿using System.Collections.Generic;
+using NationalMicrochipRegistry.Data.Models;
+using NationalMicrochipRegistry.Data.Enums;
 
 namespace NationalMicrochipRegistry.Business.Interfaces
 {
@@ -24,13 +26,22 @@ namespace NationalMicrochipRegistry.Business.Interfaces
         /// </summary>
         /// <param name="username">The username of the user.</param>
         /// <param name="password">The password provided for authentication.</param>
-        /// <returns><c>true</c> if authentication is successful; otherwise, <c>false</c>.</returns>
-        bool Authenticate(string username, string password);
+        /// <returns>
+        /// The <see cref="User"/> object if credentials are correct; otherwise, <c>null</c>.
+        /// </returns>
+        User? Authenticate(string username, string password);
 
         /// <summary>
         /// Retrieves a list of all users currently in the system.
         /// </summary>
         /// <returns>A list of <see cref="User"/> objects.</returns>
         List<User> GetAllUsers();
+
+        /// <summary>
+        /// Returns true if the given user (by ID) has the specified role.
+        /// </summary>
+        /// <param name="userId">ID of the user to check.</param>
+        /// <param name="role">The role to verify.</param>
+        bool UserHasRole(int userId, UserRole role);
     }
 }

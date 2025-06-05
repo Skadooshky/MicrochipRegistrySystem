@@ -1,0 +1,152 @@
+﻿<UserControl x:Class="NationalMicrochipRegistry.App.Views.UserView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:NationalMicrochipRegistry.App.ViewModels"
+             mc:Ignorable="d"
+             d:DesignHeight="500"
+             d:DesignWidth="700">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <!-- Row 0: Input form (Username, Password, Role) -->
+            <RowDefinition Height="Auto"/>
+            <!-- Row 1: DataGrid showing all users -->
+            <RowDefinition Height="*"/>
+            <!-- Row 2: Buttons (Add/Edit/Delete/Refresh) -->
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- =======================
+         1) Input Form (Add/Edit)
+         ======================= -->
+        <GroupBox Header="Add / Edit User"
+              Grid.Row="0"
+              Padding="10"
+              Margin="0,0,0,10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="150"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Username -->
+                <TextBlock Text="Username:" Grid.Row="0" Grid.Column="0"
+                   VerticalAlignment="Center" Margin="0,0,5,5"/>
+                <TextBox Text="{Binding CurrentUsername, UpdateSourceTrigger=PropertyChanged}"
+                 Grid.Row="0" Grid.Column="1"
+                 Margin="0,0,5,5"/>
+
+                <!-- Password -->
+                <TextBlock Text="Password:" Grid.Row="0" Grid.Column="2"
+                   VerticalAlignment="Center" Margin="15,0,5,5"/>
+                <TextBox Text="{Binding CurrentPassword, UpdateSourceTrigger=PropertyChanged}"
+                 Grid.Row="0" Grid.Column="3"
+                 Margin="0,0,5,5"/>
+
+                <!-- Role -->
+                <TextBlock Text="Role:" Grid.Row="0" Grid.Column="4"
+                   VerticalAlignment="Center" Margin="15,0,5,5"/>
+                <ComboBox ItemsSource="{Binding RolesList}"
+                  SelectedItem="{Binding SelectedRole}"
+                  Grid.Row="0" Grid.Column="5"
+                  Margin="0,0,5,5"/>
+            </Grid>
+        </GroupBox>
+
+        <!-- =========================
+         2) Users List (DataGrid)
+         ========================= -->
+        <DataGrid Grid.Row="1"
+              ItemsSource="{Binding Users}"
+              SelectedItem="{Binding SelectedUser}"
+              AutoGenerateColumns="False"
+              IsReadOnly="True"
+              CanUserAddRows="False"
+              Margin="0,0,0,10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
+                <DataGridTextColumn Header="Username" Binding="{Binding Username}" Width="*"/>
+                <DataGridTextColumn Header="Role" Binding="{Binding Role}" Width="150"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- ================================
+         3) Buttons: Add / Edit / Delete
+         (only visible to admins)
+         ================================ -->
+        <StackPanel Grid.Row="2"
+                Orientation="Horizontal"
+                HorizontalAlignment="Center"
+                Margin="0,10">
+
+            <!-- Add User (Admin only) -->
+            <Button Content="Add User"
+              Command="{Binding AddCommand}"
+              Width="100"
+              Height="30">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Visibility" Value="Visible"/>
+                        <Style.Triggers>
+                            <!-- Hide if plain User -->
+                            <DataTrigger Binding="{Binding IsOwner}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <!-- Edit User (Admin only) -->
+            <Button Content="Edit User"
+              Command="{Binding EditCommand}"
+              Width="100"
+              Height="30">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Visibility" Value="Visible"/>
+                        <Style.Triggers>
+                            <!-- Hide if plain User -->
+                            <DataTrigger Binding="{Binding IsOwner}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <!-- Delete User (Admin only) -->
+            <Button Content="Delete User"
+              Command="{Binding DeleteCommand}"
+              Width="100"
+              Height="30">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Visibility" Value="Visible"/>
+                        <Style.Triggers>
+                            <!-- Hide if plain User -->
+                            <DataTrigger Binding="{Binding IsOwner}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <!-- Refresh (visible to all roles) -->
+            <Button Content="Refresh"
+              Command="{Binding RefreshCommand}"
+              Width="100"
+              Height="30"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

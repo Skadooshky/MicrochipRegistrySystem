@@ -1,0 +1,261 @@
+﻿<UserControl x:Class="NationalMicrochipRegistry.App.Views.MicrochipView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:NationalMicrochipRegistry.App.ViewModels"
+             mc:Ignorable="d"
+             d:DesignHeight="600"
+             d:DesignWidth="900">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Generate -->
+            <RowDefinition Height="Auto"/>
+            <!-- Separator -->
+            <RowDefinition Height="Auto"/>
+            <!-- Assign -->
+            <RowDefinition Height="Auto"/>
+            <!-- Separator -->
+            <RowDefinition Height="Auto"/>
+            <!-- Delete -->
+            <RowDefinition Height="*"/>
+            <!-- Spacer or summary -->
+        </Grid.RowDefinitions>
+
+        <!-- ================
+         1) GENERATE CHIPS
+         ================ -->
+        <GroupBox Header="Generate Microchips"
+              Grid.Row="0"
+              Padding="10">
+            <GroupBox.Style>
+                <Style TargetType="GroupBox">
+                    <Setter Property="Visibility" Value="Visible"/>
+                    <Style.Triggers>
+                        <!-- Hide entire section if plain User (IsOwner==true & not Admin) -->
+                        <DataTrigger Binding="{Binding IsOwner}" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </GroupBox.Style>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Number to Generate:"
+                   VerticalAlignment="Center"
+                   Margin="0,0,5,0"/>
+                <TextBox Text="{Binding GenerateCount, UpdateSourceTrigger=PropertyChanged}"
+                 Grid.Column="1"
+                 Margin="0,0,5,0"/>
+                <Button Content="Generate"
+                 Grid.Column="2"
+                 Command="{Binding GenerateCommand}"
+                 Padding="10,5"/>
+                <Button Content="Refresh"
+                 Grid.Column="3"
+                 Command="{Binding RefreshCommand}"
+                 Padding="10,5"/>
+            </Grid>
+        </GroupBox>
+
+        <!-- Separator -->
+        <Border Grid.Row="1"
+            Height="1"
+            Background="Gray"
+            Margin="0,5"/>
+
+        <!-- ===============
+             2) SET / ASSIGN CHIP
+             =============== -->
+        <GroupBox Header="Set Microchip (Assign to Animal &amp; Clinic)"
+                  Grid.Row="2"
+                  Padding="10">
+            <GroupBox.Style>
+                <Style TargetType="GroupBox">
+                    <Setter Property="Visibility" Value="Visible"/>
+                    <Style.Triggers>
+                        <!-- Hide for plain Users -->
+                        <DataTrigger Binding="{Binding IsOwner}" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </GroupBox.Style>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <!-- Row 0: Chips + Animals -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Row 1: Clinics + Assign Button -->
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <!-- Label for Available Chips -->
+                    <ColumnDefinition Width="200"/>
+                    <!-- ComboBox for Available Chips -->
+                    <ColumnDefinition Width="Auto"/>
+                    <!-- Label for Animals -->
+                    <ColumnDefinition Width="200"/>
+                    <!-- ComboBox for Animals -->
+                    <ColumnDefinition Width="Auto"/>
+                    <!-- Label for Clinics (row 1) -->
+                    <ColumnDefinition Width="200"/>
+                    <!-- ComboBox for Clinics (row 1) -->
+                    <ColumnDefinition Width="Auto"/>
+                    <!-- Assign button (row 1) -->
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Available Chips:"
+                           Grid.Row="0" Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Margin="0,0,5,5"/>
+                <ComboBox ItemsSource="{Binding AvailableChips}"
+                          SelectedItem="{Binding SelectedChip}"
+                          DisplayMemberPath="ChipNumber"
+                          Grid.Row="0" Grid.Column="1"
+                          Margin="0,0,15,5"
+                          IsSynchronizedWithCurrentItem="False"/>
+
+                <TextBlock Text="Animals (No Chip):"
+                           Grid.Row="0" Grid.Column="2"
+                           VerticalAlignment="Center"
+                           Margin="0,0,5,5"/>
+                <ComboBox ItemsSource="{Binding AnimalsWithoutChip}"
+                          SelectedItem="{Binding SelectedAnimal}"
+                          DisplayMemberPath="Name"
+                          Grid.Row="0" Grid.Column="3"
+                          Margin="0,0,0,5"
+                          IsSynchronizedWithCurrentItem="False"/>
+
+                <!-- Row 1: Clinics + Assign Button -->
+                <TextBlock Text="Clinics:"
+                           Grid.Row="1" Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Margin="0,0,5,0"/>
+                <ComboBox ItemsSource="{Binding Clinics}"
+                          SelectedItem="{Binding SelectedClinic}"
+                          DisplayMemberPath="Name"
+                          Grid.Row="1" Grid.Column="1"
+                          Margin="0,0,15,0"
+                          IsSynchronizedWithCurrentItem="False"/>
+
+                <Button Content="Assign Chip"
+                        Grid.Row="1" Grid.Column="0"
+                        Grid.ColumnSpan="5"
+                        Command="{Binding AssignCommand}"
+                        Padding="10,5"
+                        HorizontalAlignment="Right"/>
+            </Grid>
+        </GroupBox>
+
+        <!-- Separator -->
+        <Border Grid.Row="3"
+            Height="1"
+            Background="Gray"
+            Margin="0,5"/>
+
+        <!-- ================
+         3) DELETE CHIP
+         ================ -->
+        <GroupBox Header="Search / Delete Microchip"
+              Grid.Row="4"
+              Padding="10">
+            <GroupBox.Style>
+                <Style TargetType="GroupBox">
+                    <Setter Property="Visibility" Value="Visible"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsOwner}" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </GroupBox.Style>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <!-- Search row -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Details row (if found) -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Delete button -->
+                </Grid.RowDefinitions>
+
+                <!-- Search row -->
+                <TextBlock Text="Chip Number:"
+                   Grid.Row="0" Grid.Column="0"
+                   VerticalAlignment="Center"
+                   Margin="0,0,5,5"/>
+                <TextBox Text="{Binding SearchChipNumber, UpdateSourceTrigger=PropertyChanged}"
+                 Grid.Row="0" Grid.Column="1"
+                 Margin="0,0,5,5"/>
+                <Button Content="Search"
+                Command="{Binding SearchCommand}"
+                Grid.Row="0" Grid.Column="2"
+                Padding="10,5"
+                Margin="0,0,5,5"/>
+
+                <!-- Details row: visible if FoundMicrochip != null -->
+                <StackPanel Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="4"
+                    Margin="0,10,0,0">
+                    <StackPanel.Style>
+                        <Style TargetType="StackPanel">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding FoundMicrochip}" Value="{x:Null}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+
+                    <TextBlock>
+            <Run Text="Chip Number: "/>
+            <Run Text="{Binding FoundMicrochip.ChipNumber}"/>
+                    </TextBlock>
+                    <TextBlock>
+            <Run Text="Status: "/>
+            <Run Text="{Binding FoundMicrochip.Status}"/>
+                    </TextBlock>
+                    <TextBlock>
+            <Run Text="Clinic: "/>
+            <Run Text="{Binding FoundMicrochip.Clinic.Name, TargetNullValue='(None)'}"/>
+                    </TextBlock>
+                    <TextBlock>
+            <Run Text="Assigned Animal: "/>
+            <Run Text="{Binding FoundMicrochip.Animal.Name, TargetNullValue='(None)'}"/>
+                    </TextBlock>
+                </StackPanel>
+
+                <!-- Delete button -->
+                <Button Content="Delete This Microchip"
+                Command="{Binding DeleteCommand}"
+                Grid.Row="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="4"
+                HorizontalAlignment="Center"
+                Padding="10,5"
+                Margin="0,10,0,0"/>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</UserControl>

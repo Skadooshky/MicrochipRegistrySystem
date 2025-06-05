@@ -1,9 +1,7 @@
-﻿<Application x:Class="NationalMicrochipRegistry.App"
+﻿<Application x:Class="NationalMicrochipRegistry.App.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:NationalMicrochipRegistry"
-             StartupUri="MainWindow.xaml">
+             StartupUri="Views/LoginWindow.xaml">
     <Application.Resources>
-         
     </Application.Resources>
 </Application>

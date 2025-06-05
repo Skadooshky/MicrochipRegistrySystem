@@ -1,5 +1,5 @@
-﻿using NationalMicrochipRegistry.Data.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using NationalMicrochipRegistry.Data.Models;
 
 namespace NationalMicrochipRegistry.Business.Repositories
 {

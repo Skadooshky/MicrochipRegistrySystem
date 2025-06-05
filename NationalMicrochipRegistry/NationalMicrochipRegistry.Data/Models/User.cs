@@ -26,9 +26,10 @@ namespace NationalMicrochipRegistry.Data.Models
         public string PasswordHash { get; set; } = string.Empty;
 
         /// <summary>
-        /// Gets or sets the role of the user (e.g., Admin, Staff).
+        /// Gets or sets the role of the user.
+        /// Must be one of the values in <see cref="UserRole"/>.
         /// </summary>
         [Required]
-        public string Role { get; set; } = string.Empty;
+        public UserRole Role { get; set; }
     }
 }
